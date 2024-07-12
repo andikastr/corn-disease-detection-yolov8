@@ -1,8 +1,7 @@
-# helper.py
 from ultralytics import YOLO
 import streamlit as st
 import cv2
-from pytube import YouTube
+import yt_dlp
 import settings
 import tempfile
 from sqlalchemy.orm import sessionmaker
@@ -113,18 +112,21 @@ def play_youtube_video(conf, model):
 
     if st.sidebar.button('Detect Objects'):
         try:
-            yt = YouTube(source_youtube)
-            stream = yt.streams.filter(file_extension="mp4", res=720).first()
-            vid_cap = cv2.VideoCapture(stream.url)
+            ydl_opts = {
+                'format': 'best[ext=mp4]',
+                'outtmpl': '%(id)s.%(ext)s',
+            }
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(source_youtube, download=False)
+                url = info['url']
+            
+            vid_cap = cv2.VideoCapture(url)
 
             st_frame = st.empty()
             while (vid_cap.isOpened()):
                 success, image = vid_cap.read()
                 if success:
-                    _display_detected_frames(conf,
-                                             model,
-                                             st_frame,
-                                             image)
+                    _display_detected_frames(conf, model, st_frame, image)
                 else:
                     vid_cap.release()
                     break
