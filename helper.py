@@ -101,8 +101,6 @@ def play_webcam(conf, model):
     Raises:
         None
     """
-    source_webcam = settings.WEBCAM_PATH
-
     if 'detecting' not in st.session_state:
         st.session_state.detecting = False
 
@@ -111,10 +109,21 @@ def play_webcam(conf, model):
 
     if st.session_state.detecting:
         stop_button = st.sidebar.button('Stop')
+        vid_cap = None
+        
+        # Try different webcam indices
+        for i in range(5):
+            vid_cap = cv2.VideoCapture(i)
+            if vid_cap.isOpened():
+                break
+
+        if not vid_cap or not vid_cap.isOpened():
+            st.sidebar.error("No webcam found or all indices are out of range.")
+            return
+
+        st_frame = st.empty()
         try:
-            vid_cap = cv2.VideoCapture(source_webcam)
-            st_frame = st.empty()
-            while (vid_cap.isOpened()):
+            while vid_cap.isOpened():
                 success, image = vid_cap.read()
                 if success:
                     _display_detected_frames(conf, model, st_frame, image)
