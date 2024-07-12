@@ -48,8 +48,9 @@ page = st.sidebar.selectbox("Select Page", ["🏠 | Home", "🔎 | Detection", "
 if page == "🏠 | Home":
     st.title("Welcome to my CornVerse Project")
     st.write("""
-        This project is designed to detect corn disease using YOLOv8 model.
-        You can navigate to the Detection page to try out the detection feature.
+        Harness the power of advanced technology with our web-based application utilizing YOLOv8 
+        to accurately identify and diagnose diseases in corn leaves. Enhance your crop management with real-time, 
+        reliable insights for healthier, more productive yields.
     """)
     st.subheader("Page Descriptions:")
     st.write("""
