@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, WebRtcMode, RTCConfiguration
 import av
 import numpy as np
-from models import DetectionHistory, SessionLocal
+from database import DetectionHistory, SessionLocal
 
 def load_model(model_path):
     """
