@@ -9,7 +9,6 @@ import streamlit as st
 # Local Modules
 import settings
 import helper
-from pytube import YouTube
 
 # Setting page layout
 st.set_page_config(
