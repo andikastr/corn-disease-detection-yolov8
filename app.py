@@ -77,7 +77,7 @@ elif page == "🔎 | Detection":
     st.title("Corn Disease Detection using YOLOv8")
 
     st.sidebar.header("ML Model Config")
-    confidence = float(st.sidebar.slider("Select Model Confidence", 25, 100, 40)) / 100
+    confidence = float(st.sidebar.slider("Select Model Confidence (%)", 25, 100, 40)) / 100
 
     model_path = Path(settings.DETECTION_MODEL)
     try:
