@@ -148,26 +148,7 @@ elif page == "🔎 | Detection":
                         st.error(ex)
 
     elif source_radio == settings.VIDEO:
-        source_vid = st.sidebar.file_uploader("Choose a video...", type=("mp4", "avi", "mov", "mkv"))
-
-        if source_vid is not None:
-            tfile = tempfile.NamedTemporaryFile(delete=False)
-            tfile.write(source_vid.read())
-            vid_cap = cv2.VideoCapture(tfile.name)
-
-            st.video(tfile.name)
-
-            if st.sidebar.button('Detect Objects'):
-                st_frame = st.empty()
-                while vid_cap.isOpened():
-                    success, image = vid_cap.read()
-                    if success:
-                        helper._display_detected_frames(confidence, model, st_frame, image)
-                    else:
-                        vid_cap.release()
-                        break
-        else:
-            st.warning("Please upload a video file.")
+        helper.play_stored_video(confidence, model)
 
     elif source_radio == settings.WEBCAM:
         helper.play_webcam(confidence, model)
